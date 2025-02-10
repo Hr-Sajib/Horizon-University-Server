@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { Student } from "./student.interface";
+import validator from 'validator';
 
 const guardianSchema = new Schema({
   fatherName: {
@@ -40,7 +41,13 @@ const studentSchema = new Schema({
     
     }, // built-in validator used maxlength,trim
     middleName: { type: String },
-    lastName: { type: String, required: true },
+    lastName: { type: String,
+                required: true,
+                validate:{
+                    validator: (value: string) => validator.isAlpha(value),
+                    message: "{VALUE} is not valid"
+                }
+    },
     address: { type: String, required: true },
   },
   id: { type: String, required: true },

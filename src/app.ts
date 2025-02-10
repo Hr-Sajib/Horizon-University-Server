@@ -1,7 +1,5 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
 import { StudentRoutes } from "./app/moduls/student/student.route";
 
 const app: Application = express();
@@ -19,6 +17,5 @@ app.get("/", (req: Request, res: Response) => {
   res.send(a);
 });
 
-console.log(process.cwd());
 
 export default app;
