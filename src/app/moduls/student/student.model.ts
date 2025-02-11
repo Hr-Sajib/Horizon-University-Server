@@ -40,7 +40,6 @@ const studentSchema = new Schema({
       },
     
     }, // built-in validator used maxlength,trim
-    middleName: { type: String },
     lastName: { type: String,
                 required: true,
                 validate:{
@@ -48,9 +47,12 @@ const studentSchema = new Schema({
                     message: "{VALUE} is not valid"
                 }
     },
-    address: { type: String, required: true },
   },
+  
   id: { type: String, required: true },
+  admissionSemester:{
+    type: String
+  },
   gender: {
     type: String,
     enum: {
@@ -66,12 +68,28 @@ const studentSchema = new Schema({
     type: String,
     enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
   },
+  email: {
+    type: String,
+    validate: {
+      validator: (value: string) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      },
+      message: "Not a valid email",
+    },
+    required: [true, "Email is required"],
+  },  
   presentAddress: { type: String, required: true },
   permanentAddress: { type: String, required: true },
   guardian: { type: guardianSchema, required: true },
   localGuardian: { type: localGuardianSchema, required: true },
   profileImage: { type: String },
-  isActive: { type: String, enum: ["active", "blocked"], default: "active" },
+  user:{
+    type: Schema.Types.ObjectId,
+    required: true,
+    unique: true,
+    ref:'UserModel'
+
+  }
 });
 
 export const StudentModel = model<Student>("Student", studentSchema);

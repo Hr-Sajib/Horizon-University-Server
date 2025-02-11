@@ -3,10 +3,12 @@ import { UserService } from "./user.service";
 
 const createStudent = async (req: Request, res: Response) => {
     try {
-        const student = req.body.student;
+        // const {password, student} = req.body.student;
+
+        // console.log("req body : ", req.body)
 
         // Call service function to send this data
-        const result = await UserService.createStudentIntoDB(student);
+        const result = await UserService.createStudentIntoDB(req.body.student.password,req.body.student);
 
         // Send response correctly
         res.status(200).json({
