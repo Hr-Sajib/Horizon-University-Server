@@ -8,7 +8,7 @@ const studentSchema = new Schema({
   id: { type: String, required: true, unique: true },
   admissionSemester: { type: String },
   gender: { type: String, required: true, enum: ["male", "female"] },
-  dateOfBirth: { type: String, required: true },
+  dateOfBirth: { type: Date, required: true },
   contactNo: { type: String, required: true },
   emergencyContactNo: { type: String, required: true },
   bloodGroup: { type: String, enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]},
