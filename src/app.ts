@@ -1,22 +1,32 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import cors from "cors";
-// import { StudentRoutes } from "./app/moduls/student/student.route";
-import { UserRoutes } from "./app/moduls/user/user.route";
+import { UserRoutes } from "./app/moduls/user/user.route"; // Ensure correct path for the import
+import { globalErrorHandler } from "./app/middlewares/globalErrorHandler";
+import { notFoundHandler } from "./app/middlewares/notFound";
 
 const app: Application = express();
 
-
-// parser
+// Middleware
 app.use(express.json());
 app.use(cors());
 
-// application routes 
-    app.use("/api/v1/users", UserRoutes);
+// Application Routes
+app.use("/api/v1/users", UserRoutes);
 
+// Root route
 app.get("/", (req: Request, res: Response) => {
   const a = 10;
-  res.send(a);
+  res.send(String(a)); // Send a string as response
 });
+
+
+// global error handler 
+app.use(globalErrorHandler);
+
+// not found route 
+app.use(notFoundHandler);
+
+
 
 
 export default app;
