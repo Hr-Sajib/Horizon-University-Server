@@ -5,6 +5,7 @@ import { TUser } from "./user.interface";
 import UserModel from "./user.model";
 
 
+
 const createStudentIntoDB = async(password: string, studentData: Student)=>{
 
     password = config.default_pass as string || password
@@ -14,7 +15,6 @@ const createStudentIntoDB = async(password: string, studentData: Student)=>{
         id: "213-15-4323",
         password, 
     };
-
 
 
 // create user 
