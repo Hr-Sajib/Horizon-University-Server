@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { StudentServices } from "./student.service";
 
 
 
 
-const getAllStudents = async(req: Request, res:Response)=>{
+const getAllStudents : RequestHandler = async(req, res)=>{ // RequestHandler for non repeated type declarations of func params
 
     try{
 
@@ -24,7 +24,7 @@ const getAllStudents = async(req: Request, res:Response)=>{
 
 
 
-const getSingleStudent = async(req: Request, res:Response)=>{
+const getSingleStudent : RequestHandler = async(req, res)=>{
 
     try{
 

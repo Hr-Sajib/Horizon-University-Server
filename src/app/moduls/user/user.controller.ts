@@ -1,10 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import sendResponse from "../../utilitties/sendResponse";
 import { UserService } from "./user.service";
 import httpStatus from 'http-status'
 
 
-const createStudent = async (req: Request, res: Response, next:NextFunction) => {
+const createStudent : RequestHandler = async (req, res, next) => {
     try {
         // Call service function to send this data
         const result = await UserService.createStudentIntoDB(req.body.student.password,req.body.student);
