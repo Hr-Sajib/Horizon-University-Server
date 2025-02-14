@@ -9,7 +9,7 @@ type Month =
 export interface IAcademicSemester extends Document {
   name: "Spring" | "Fall" | "Summar";
   code: "01" | "02" | "03";
-  year: Date;
+  year: string;
   startMonth: Month;
   endMonth: Month;
 }
@@ -18,7 +18,7 @@ const academicSemesterSchema = new Schema<TAcademicSemester>(
   {
     name: { type: String, enum: ["Spring", "Fall", "Summar"], required: true }, // enum used direct array declared
     code: { type: String, enum: ["01", "02", "03"], required: true },
-    year: { type: Date, required: true },
+    year: { type: String, required: true },
     startMonth: { 
       type: String, 
       enum: months , // enum used imported array declared
@@ -33,4 +33,4 @@ const academicSemesterSchema = new Schema<TAcademicSemester>(
   { timestamps: true }
 );
 
-export const AcademicSemesterModel = model<TAcademicSemester>("AcademicSemesterModel", academicSemesterSchema);
+export const AcademicSemesterModel = model<TAcademicSemester>("AcademicSemesters", academicSemesterSchema);

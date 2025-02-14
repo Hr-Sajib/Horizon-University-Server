@@ -6,6 +6,7 @@ const createAcademicSemesterIntoDB = async(academicSemesterData: TAcademicSemest
 
 // create user 
     const result = await AcademicSemesterModel.create(academicSemesterData);
+    return  result;
 
 } 
 
