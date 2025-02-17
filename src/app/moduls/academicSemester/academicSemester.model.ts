@@ -33,4 +33,55 @@ const academicSemesterSchema = new Schema<TAcademicSemester>(
   { timestamps: true }
 );
 
+
+
+
+// check for semester already exists or not
+
+academicSemesterSchema.pre('save', async function(next){
+  const semesterExists = await AcademicSemesterModel.findOne({
+    name: this.name,
+    year: this.year
+  })
+
+
+// const code = ((this.name=='Spring' && this.code==='01') || (this.name=='Fall' && this.code=='02') || (this.name=='Summar' && this.code=='03'))
+
+
+// organized approach 
+
+type TSemesterNameCodeMapper = {
+  [key:string] : string     // used map type of TS for existing semesters or added later...
+}
+
+const semesterListMapper:TSemesterNameCodeMapper = {
+  Spring: '01',
+  Fall: '02',
+  Summar: '03'
+}
+
+const nameCodeMatch = (semesterListMapper[this.name] == this.code)
+
+if(!nameCodeMatch){
+  throw new Error('Semester name and code mismatched!')
+}
+else if(semesterExists){
+  throw new Error('Semester already exists!!')
+}
+
+
+
+
+
+
+
+  next();
+})
+
+
+
+
+
+
+
 export const AcademicSemesterModel = model<TAcademicSemester>("AcademicSemesters", academicSemesterSchema);
