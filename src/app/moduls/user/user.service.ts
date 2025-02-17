@@ -3,6 +3,7 @@ import { Student } from "../student/student.interface";
 import { StudentModel } from "../student/student.model";
 import { TUser } from "./user.interface";
 import UserModel from "./user.model";
+import { generateStudentId } from "./user.utilities";
 
 
 
@@ -10,12 +11,12 @@ const createStudentIntoDB = async(password: string, studentData: Student)=>{
 
     password = config.default_pass as string || password
 
-    
+    const studentId = await generateStudentId(studentData.admissionSemester);
 
     const userData: Partial<TUser> = {
         role: "student",
-        id: "213-15-4329",
         password, 
+        id: studentId
     };
 
 
@@ -44,3 +45,4 @@ export const UserService = {
     createStudentIntoDB,
 
 }
+

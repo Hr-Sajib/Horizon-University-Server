@@ -2,40 +2,22 @@ import { NextFunction, Request, RequestHandler, Response } from "express";
 import sendResponse from "../../utilitties/sendResponse";
 import { UserService } from "./user.service";
 import httpStatus from 'http-status'
+import { tryCatchAsync } from "../../utilitties/tryCatch";
 
 
-const createStudent : RequestHandler = async (req, res, next) => {
-    try {
-        // Call service function to send this data
-        const result = await UserService.createStudentIntoDB(req.body.student.password,req.body.student);
+const createStudent : RequestHandler = tryCatchAsync(async (req, res, next) => {
 
-        // Send response correctly
+    // Call service function to send this data
+    const result = await UserService.createStudentIntoDB(req.body.student.password,req.body.student);
 
-        // res.status(200).json({
-        //     success: true,
-        //     message: "Student is created successfully.",
-        //     data: result,
-        // });
+    sendResponse(res,{ //using sendResponse a common utility generic function for sending response
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "Student created successfully..",
+        data: result
+    });
 
-        sendResponse(res,{ //using sendResponse a common utility generic function for sending response
-            success: true,
-            statusCode: httpStatus.OK,
-            message: "Student created successfully..",
-            data: result
-        });
-
- 
-    } catch (err) {
-        // console.error(err);
-        // res.status(500).json({
-        //     success: false,
-        //     message: "Internal Server Error",
-        //     error: err,
-        // });
-
-        next(err) //global error handler instead
-    }
-};
+});
 
 
 
