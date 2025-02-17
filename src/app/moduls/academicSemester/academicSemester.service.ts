@@ -10,7 +10,14 @@ const createAcademicSemesterIntoDB = async(academicSemesterData: TAcademicSemest
 
 } 
 
+
+const getAllAcademicSemestersFromDB = async()=>{
+    const result = await AcademicSemesterModel.find();
+    return result;
+}
+
 export const AcademicSemesterService = {
     createAcademicSemesterIntoDB,
+    getAllAcademicSemestersFromDB,
 
 } 

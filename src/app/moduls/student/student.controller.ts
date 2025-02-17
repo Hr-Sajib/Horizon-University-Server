@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import { catchAsync } from "../../utilitties/tryCatch";
+import { tryCatchAsync } from "../../utilitties/tryCatch";
 import { StudentServices } from "./student.service";
 
 
@@ -8,7 +8,7 @@ import { StudentServices } from "./student.service";
 
 
 
-const getAllStudents = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{ // RequestHandler for non repeated type declarations of func params
+const getAllStudents = tryCatchAsync(async(req:Request, res:Response, next:NextFunction)=>{ // RequestHandler for non repeated type declarations of func params
         
     const result = await StudentServices.getAllStudentsFromDB();
     
@@ -23,7 +23,7 @@ const getAllStudents = catchAsync(async(req:Request, res:Response, next:NextFunc
 
 
 
-const getSingleStudent = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+const getSingleStudent = tryCatchAsync(async(req:Request, res:Response, next:NextFunction)=>{
    
     const studentId = req.params.studentId;
    

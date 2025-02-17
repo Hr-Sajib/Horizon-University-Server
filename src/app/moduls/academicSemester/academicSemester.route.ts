@@ -8,6 +8,6 @@ const router = express.Router()
 
 
 router.post('/create-acedemic-semester', validateRequest(createAcademicSemesterValidationSchema),AcademicSemesterController.createAcademicSemester)
-
+router.get('/',AcademicSemesterController.getAllAcademicSemesters)
 
 export const AcademicSemesterRoutes = router; 

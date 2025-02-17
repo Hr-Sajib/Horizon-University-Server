@@ -2,6 +2,7 @@ import { NextFunction, Request, RequestHandler, Response } from "express";
 import sendResponse from "../../utilitties/sendResponse";
 import httpStatus from 'http-status'
 import { AcademicSemesterService } from "./academicSemester.service";
+import { tryCatchAsync } from "../../utilitties/tryCatch";
 
 
 const createAcademicSemester : RequestHandler = async (req, res, next) => {
@@ -24,4 +25,19 @@ const createAcademicSemester : RequestHandler = async (req, res, next) => {
 
 
 
-export const AcademicSemesterController = { createAcademicSemester};
+
+const getAllAcademicSemesters = tryCatchAsync( async(req:Request, res:Response, next:NextFunction)=>{ 
+        
+    const result = await AcademicSemesterService.getAllAcademicSemestersFromDB();
+    
+    res.status(200).json({
+            success: true,
+            message: "Academic Semesters are retrived successfully..",
+            data: result,
+        })
+
+})
+
+
+
+export const AcademicSemesterController = { createAcademicSemester, getAllAcademicSemesters};
