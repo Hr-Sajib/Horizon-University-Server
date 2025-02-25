@@ -7,7 +7,7 @@ type Month =
   | "July" | "August" | "September" | "October" | "November" | "December";
 
 export interface IAcademicSemester extends Document {
-  name: "Spring" | "Fall" | "Summar";
+  name: "Spring" | "Summar" | "Fall";
   code: "01" | "02" | "03";
   year: string;
   startMonth: Month;
@@ -56,8 +56,8 @@ type TSemesterNameCodeMapper = {
 
 const semesterListMapper:TSemesterNameCodeMapper = {
   Spring: '01',
-  Fall: '02',
-  Summar: '03'
+  Fall: '03',
+  Summar: '02'
 }
 
 const nameCodeMatch = (semesterListMapper[this.name] == this.code)

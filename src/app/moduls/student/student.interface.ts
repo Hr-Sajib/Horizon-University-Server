@@ -22,7 +22,7 @@ export type Student = {
     };
     id: string;
     gender: "male" | "female";
-    dateOfBirth: Date;
+    dateOfBirth: string;
     email: string;
     contactNo: string;
     emergencyContactNo: string;

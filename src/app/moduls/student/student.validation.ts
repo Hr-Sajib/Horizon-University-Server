@@ -18,7 +18,7 @@ export const createStudentValidationSchema = z.object({
       admissionSemester: z.string().optional(),
       gender: z.enum(["male", "female"], { message: "Can't select other than male or female" }),
       dateOfBirth: z
-        .date().optional(),
+        .string().optional(),
       contactNo: z
         .string()
         .regex(/^\+?\d{10,15}$/, { message: "Contact number should be in valid format" }),
