@@ -12,6 +12,8 @@ const getAllAcademicSemestersFromDB = async()=>{
     const result = await AcademicSemesterModel.find();
     return result;
 }
+
+
 const updateAcademicSemesterInDB = async(academicSemesterId:string, updatedAcademicSemesterData: Partial<TAcademicSemester>)=>{
     return AcademicSemesterModel.findByIdAndUpdate(
         academicSemesterId,

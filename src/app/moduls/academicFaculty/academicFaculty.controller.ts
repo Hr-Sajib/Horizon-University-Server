@@ -3,6 +3,7 @@ import sendResponse from "../../utilitties/sendResponse";
 import { tryCatchAsync } from "../../utilitties/tryCatch";
 import { AcademicFacultyService } from "../academicFaculty/academicFaculty.service";
 import httpStatus from 'http-status'
+import mongoose from "mongoose";
 
 
 
@@ -54,8 +55,32 @@ const getSingleAcademicFaculty = tryCatchAsync(async(req:Request, res:Response, 
 
 
 
+const updateAcademicFaculty: RequestHandler = tryCatchAsync(async (req, res, next) => {  
+    const academicFacultyId = req.params.academicFacultyId;
+
+    if (!mongoose.Types.ObjectId.isValid(academicFacultyId)) {
+        return next(new Error("Academic Faculty ID is not invalid!"));  // ✅ Properly passing error to global handler
+    }
+
+    const updatedData = req.body.updatedAcademicFacultyData;
+    const updatedAcademicFaculty = await AcademicFacultyService.updateAcademicFacultyInDB(academicFacultyId, updatedData);
+
+    if (!updatedAcademicFaculty) {
+        return next(new Error("Academic Faculty not found!"));  // ✅ Correct error handling
+    }
+
+    res.status(200).json({
+        success: true,
+        message: "Academic Faculty updated successfully!",
+        data: updatedAcademicFaculty
+    });
+});
+
+
+
 export const AcademicFacultyControllers = { 
     getAllAcademicFaculty,
     getSingleAcademicFaculty,
-    createAcademicFaculty 
+    createAcademicFaculty,
+    updateAcademicFaculty
 };
