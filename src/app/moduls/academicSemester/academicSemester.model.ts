@@ -57,7 +57,7 @@ type TSemesterNameCodeMapper = {
 const semesterListMapper:TSemesterNameCodeMapper = {
   Spring: '01',
   Fall: '03',
-  Summar: '02'
+  Summar: '02',
 }
 
 const nameCodeMatch = (semesterListMapper[this.name] == this.code)
@@ -84,4 +84,4 @@ else if(semesterExists){
 
 
 
-export const AcademicSemesterModel = model<TAcademicSemester>("AcademicSemesters", academicSemesterSchema);
+export const AcademicSemesterModel = model<TAcademicSemester>("Academic Semesters", academicSemesterSchema);

@@ -32,7 +32,7 @@ const getAllAcademicFaculty = tryCatchAsync(async(req:Request, res:Response, nex
 
 })
 
-
+ 
 
 const getSingleAcademicFaculty = tryCatchAsync(async(req:Request, res:Response, next:NextFunction)=>{
    
