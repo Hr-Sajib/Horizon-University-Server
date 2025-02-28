@@ -1,9 +1,8 @@
-import { TacademicFaculty } from "./academicFaculty.interface";
-import { AcademicFacultyModel } from "./academicFaculty.model"; 
 
 
 
-const createAcademicFacultyIntoDB = async(academicFacultyData: TacademicFaculty)=>{
+
+const createAcademicDepartmentIntoDB = async(academicFacultyData: TacademicDepartment)=>{
 
     const result = await AcademicFacultyModel.create(academicFacultyData);
     return  result;
