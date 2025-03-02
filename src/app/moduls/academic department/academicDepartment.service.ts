@@ -1,38 +1,39 @@
+import { TacademicDepartment } from "./academicDepartment.interface";
+import { AcademicDepartmentModel } from "./academicDepartment.model";
 
 
+const createAcademicDepartmentIntoDB = async(academicDepartmentData: TacademicDepartment)=>{
 
-
-const createAcademicDepartmentIntoDB = async(academicFacultyData: TacademicDepartment)=>{
-
-    const result = await AcademicFacultyModel.create(academicFacultyData);
-    return  result;
-
-} 
-
-const getSingleAcademicFaculty = async(id: string)=>{
-
-    const result = await AcademicFacultyModel.findById(id);
+    const result = await AcademicDepartmentModel.create(academicDepartmentData);
     return  result;
 } 
-    
 
-const getAllAcademicFacultyFromDB = async()=>{
-    const result = await AcademicFacultyModel.find();
+
+const getSingleAcademicDepartment = async(id: string)=>{
+
+    const result = await AcademicDepartmentModel.findById(id);
+    return  result;
+} 
+
+
+const getAllAcademicDepartmentFromDB = async()=>{
+    const result = await AcademicDepartmentModel.find();
     return result;
 }
 
-const updateAcademicFacultyInDB = async(academicFacultyId:string, updatedAcademicFacultyData: Partial<TacademicFaculty>)=>{
-    return AcademicFacultyModel.findByIdAndUpdate(
-        academicFacultyId,
-        { $set: updatedAcademicFacultyData },
+
+const updateAcademicDepartmentInDB = async(academicDepartmentId:string, updatedAcademicDepartmentData: Partial<TacademicDepartment>)=>{
+    return AcademicDepartmentModel.findByIdAndUpdate(
+        academicDepartmentId,
+        { $set: updatedAcademicDepartmentData },
         { new: true}
     )
 }
 
-export const AcademicFacultyService = {
-    createAcademicFacultyIntoDB,
-    getAllAcademicFacultyFromDB,
-    getSingleAcademicFaculty,
-    updateAcademicFacultyInDB
 
-} 
+export const AcademicDepartmentService = {
+    createAcademicDepartmentIntoDB,
+    getSingleAcademicDepartment,
+    getAllAcademicDepartmentFromDB,
+    updateAcademicDepartmentInDB
+}
