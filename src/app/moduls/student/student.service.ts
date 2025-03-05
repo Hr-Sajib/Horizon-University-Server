@@ -1,12 +1,17 @@
-import { Student } from "./student.interface";
+
 import { StudentModel } from "./student.model";
 
-
-
-const getAllStudentsFromDB = async()=>{
-    const result = await StudentModel.find();
+const getAllStudentsFromDB = async () => {
+    const result = await StudentModel.find()
+        .populate('admissionSemester')
+        .populate({
+            path: "academicDepartment",
+            populate: { path: "academicFaculty" }
+        })
+        // .lean(); // Converts Mongoose documents into plain objects
     return result;
-}
+};
+
 
 const getSingleStudentFromDB = async(studentId: string)=>{
 
@@ -15,9 +20,7 @@ const getSingleStudentFromDB = async(studentId: string)=>{
 }
 
 
-
 export const StudentServices = {
     getAllStudentsFromDB,
     getSingleStudentFromDB
 }
-

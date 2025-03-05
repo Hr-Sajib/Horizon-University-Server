@@ -16,6 +16,7 @@ export const createStudentValidationSchema = z.object({
           .regex(/^[A-Za-z]+$/, { message: "Last name must contain only alphabets" }),
       }),
       admissionSemester: z.string().optional(),
+      academicDepartment: z.string().optional(),
       gender: z.enum(["male", "female"], { message: "Can't select other than male or female" }),
       dateOfBirth: z
         .string().optional(),

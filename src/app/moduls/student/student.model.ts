@@ -1,3 +1,4 @@
+
 import { Schema, model } from "mongoose";
 
 const studentSchema = new Schema({
@@ -6,7 +7,14 @@ const studentSchema = new Schema({
     lastName: { type: String, required: true },
   },
   id: { type: String, required: true, unique: true },
-  admissionSemester: { type: Schema.Types.ObjectId },
+  admissionSemester: { 
+    type: Schema.Types.ObjectId,
+    ref: "Academic Semesters" // use model name not variable name here
+  },
+  academicDepartment:{
+    type: Schema.Types.ObjectId,
+    ref: "Academic Departments" // use model name not variable name here
+  },
   gender: { type: String, required: true, enum: ["male", "female"] },
   dateOfBirth: { type: String },
   contactNo: { type: String, required: true },
@@ -29,7 +37,11 @@ const studentSchema = new Schema({
     contactNo: { type: String, required: true },
   },
   profileImage: { type: String },
-  user: { type: Schema.Types.ObjectId, required: true, unique: true, ref: "UserModel" },
+  user: { 
+    type: Schema.Types.ObjectId, 
+    required: true, unique: true, 
+    ref: "User" 
+  },
 });
 
 

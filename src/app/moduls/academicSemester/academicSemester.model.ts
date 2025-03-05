@@ -68,18 +68,8 @@ if(!nameCodeMatch){
 else if(semesterExists){
   throw new Error('Semester already exists!!')
 }
-
-
-
-
-
-
-
   next();
 })
-
-
-
 
 
 
