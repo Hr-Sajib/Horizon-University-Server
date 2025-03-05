@@ -4,6 +4,7 @@ import { tryCatchAsync } from "../../utilitties/tryCatch";
 import { AcademicFacultyService } from "../academicFaculty/academicFaculty.service";
 import httpStatus from 'http-status'
 import mongoose from "mongoose";
+import { AppError } from "../../errors/errors";
 
 
 
@@ -42,7 +43,7 @@ const getSingleAcademicFaculty = tryCatchAsync(async(req:Request, res:Response, 
     const result = await AcademicFacultyService.getSingleAcademicFaculty(facultyId)
 
     if (!result) {
-        throw new Error("Faculty not found");
+        throw new AppError(404,"Faculty not found");
     }
 
     res.status(200).json({

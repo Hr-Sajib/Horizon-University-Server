@@ -4,10 +4,6 @@ import { StudentServices } from "./student.service";
 
 
 
-
-
-
-
 const getAllStudents = tryCatchAsync(async(req:Request, res:Response, next:NextFunction)=>{ // RequestHandler for non repeated type declarations of func params
         
     const result = await StudentServices.getAllStudentsFromDB();

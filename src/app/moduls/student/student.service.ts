@@ -8,7 +8,6 @@ const getAllStudentsFromDB = async () => {
             path: "academicDepartment",
             populate: { path: "academicFaculty" }
         })
-        // .lean(); // Converts Mongoose documents into plain objects
     return result;
 };
 
