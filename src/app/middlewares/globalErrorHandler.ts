@@ -5,11 +5,11 @@ import { string, ZodError, ZodIssue } from "zod";
 import httpStatus from 'http-status'
 import { TErrorSource } from "../errors/interface/errorTypes";
 import { handleZodError } from "../errors/handleZodError";
+import { handleValidationError } from "../errors/handleValidationError";
 
 
 export const globalErrorHandler : ErrorRequestHandler = (err: any, req: Request, res: Response, next: NextFunction) => { 
     
-
 
     // default values 
     let statusCode = err.statusCode || 500; 
@@ -21,10 +21,18 @@ export const globalErrorHandler : ErrorRequestHandler = (err: any, req: Request,
         }
     ]
 
-
-
     if(err instanceof ZodError){
         const simplifiedError = handleZodError(err)
+        statusCode = simplifiedError.statusCode;
+        message = simplifiedError.message;
+        errorSources = simplifiedError.errorSources;
+    }
+    else if(err?.name === 'ValidationError'){
+        const simplifiedError = handleValidationError(err)
+
+        console.log(simplifiedError);
+
+
         statusCode = simplifiedError.statusCode;
         message = simplifiedError.message;
         errorSources = simplifiedError.errorSources;
