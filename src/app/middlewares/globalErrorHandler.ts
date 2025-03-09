@@ -1,31 +1,41 @@
-// import { Response } from "express";
 
-// export const globalErrorHandler = (err:any, res:Response)=> { 
-
-//     const statusCode = err.statusCode || 500; // Use err's statusCode if available
-//     const message = err.message || "Something went wrong!"
-  
-//       res.status(statusCode).json({
-//       success: false,
-//       message,
-//       error: err.stack || err
-//     })
-  
-//   }
-
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import safeStringify from "fast-safe-stringify";
+import { string, ZodError, ZodIssue } from "zod";
+import httpStatus from 'http-status'
+import { TErrorSource } from "../errors/interface/errorTypes";
+import { handleZodError } from "../errors/handleZodError";
 
-export const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => { 
-    const statusCode = err.statusCode || 500; 
-    const message = err.message || "Something went wrong!";
 
-    // Log the error safely without circular references
-    console.error(safeStringify(err));
+export const globalErrorHandler : ErrorRequestHandler = (err: any, req: Request, res: Response, next: NextFunction) => { 
+    
+
+
+    // default values 
+    let statusCode = err.statusCode || 500; 
+    let message = err.message || "Something went wrong!";
+    let errorSources: TErrorSource = [
+        {
+            path:'',
+            message:'Something went wrong'
+        }
+    ]
+
+
+
+    if(err instanceof ZodError){
+        const simplifiedError = handleZodError(err)
+        statusCode = simplifiedError.statusCode;
+        message = simplifiedError.message;
+        errorSources = simplifiedError.errorSources;
+    }
+
 
     res.status(statusCode).json({
         success: false,
         message,
-        stack: process.env.NODE_ENV === "development" ? err.stack : undefined // Show stack only in dev mode
+        errorSources,
+        stack: process.env.NODE_ENV === "development" ? err.stack : undefined
     });
 };
+
