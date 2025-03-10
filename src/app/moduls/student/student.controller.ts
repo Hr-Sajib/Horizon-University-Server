@@ -8,7 +8,7 @@ import httpStatus from 'http-status'
 
 const getAllStudents = tryCatchAsync(async(req:Request, res:Response, next:NextFunction)=>{ // RequestHandler for non repeated type declarations of func params
         
-    const result = await StudentServices.getAllStudentsFromDB();
+    const result = await StudentServices.getAllStudentsFromDB(req.query);
     
     res.status(200).json({
             success: true,
