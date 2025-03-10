@@ -7,12 +7,15 @@ import { TUser } from "./user.interface";
 import UserModel from "./user.model";
 import { generateStudentId_1 } from "./user.utilities";
 import HttpStatus from "http-status";
+import { AcademicSemesterModel } from "../academicSemester/academicSemester.model";
+import { AcademicDepartmentModel } from "../academic department/academicDepartment.model";
 
 
 
 const createStudentIntoDB = async(password: string, studentData: Student)=>{
 
 
+    let errorMsg : string = ''
 
     const session = await mongoose.startSession();
 
@@ -20,6 +23,20 @@ const createStudentIntoDB = async(password: string, studentData: Student)=>{
     try{
 
         session.startTransaction();
+
+        // Validate admissionSemester exists
+        const semesterExists = await AcademicSemesterModel.exists({ _id: studentData.admissionSemester }).session(session);
+        if (!semesterExists) {
+            errorMsg = "Invalid admission semester ID"
+            throw new AppError(400, "Invalid admission semester ID");
+        }
+
+        // Validate academicDepartment exists
+        const departmentExists = await AcademicDepartmentModel.exists({ _id: studentData.academicDepartment }).session(session);
+        if (!departmentExists) {
+            errorMsg = "Invalid academic department ID"
+            throw new AppError(400, "Invalid academic department ID");
+        }
 
 
         password = config.default_pass as string || password
@@ -63,7 +80,7 @@ const createStudentIntoDB = async(password: string, studentData: Student)=>{
     }catch(err){
         await session.abortTransaction()
         await session.endSession()
-        throw new AppError("Failed to create student")
+        throw new AppError(404,errorMsg);
     }
 
 

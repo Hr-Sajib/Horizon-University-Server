@@ -16,7 +16,7 @@ app.use("/api/v1/", router);
 
 
 // Root route
-app.get("/", (req: Request, res: Response) => {
+app.get("/", async(req: Request, res: Response) => {
   const a = 'Welcome to Horizon University..';
   res.send(String(a)); // Send a string as response
 });
