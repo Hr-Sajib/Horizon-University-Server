@@ -1,44 +1,121 @@
 
+import { ZodNumber } from "zod";
+import QueryBuilder from "../../builder/QueryBuilder";
+import { studentSearchableFields } from "./student.constants";
 import { Student } from "./student.interface";
 import { StudentModel } from "./student.model";
 
-const getAllStudentsFromDB = async (query : Record<string,unknown>) => {
-    console.log(query);
-    const queryObj = query; // copied
+
+const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
+//     // console.log(query);
+
+//     let searchTerm = '';
+    // const studentSearchableFields = ['email', 'name.firstName', 'name.lastName', 'presentAddress'];
+
+//     // If searchTerm is provided in the query, set it
+//     if (query.searchTerm) {
+//         searchTerm = query?.searchTerm as string;
+//     }
+
+//     // Construct search query with $or for searchable fields
+//     // const searchQuery = StudentModel.find({
+//     //     $or: studentSearchableFields.map((field) => ({
+//     //         [field]: { $regex: searchTerm, $options: 'i' }
+//     //     }))
+//     // });
+
+//     // Remove excluded fields from the query
+    // const excludedFields = ['searchTerm', 'sort', 'limit', 'page','fields']; 
+    // const queryObj = { ...query };
+    // excludedFields.forEach((el) => delete queryObj[el]);
 
 
-    let searchTerm:string = '';
-    const studentSearchableFields = ['email', 'name.firstName','name.lastName','presentAddress']
+//     // Construct the base query with filters applied from the queryObj
+//     // let filterQuery = searchQuery.find(queryObj)
+//     //     .populate('admissionSemester')
+//     //     .populate({
+//     //         path: "academicDepartment",
+//     //         populate: { path: "academicFaculty" }
+//     //     });
 
-    if(query.searchTerm){
-        searchTerm = query?.searchTerm as string;
-    }
+//     // Handle sorting logic
+//     let sort: Record<string, 1 | -1> = { createdAt: -1 }; // Default to descending sort by createdAt
 
-    const searchQuery = StudentModel.find({
-        $or:studentSearchableFields.map((field)=>({
-            [field]:{$regex: searchTerm, $options:'i'}
-        }))
-    })
+//     if (query.sort) {
+//         const sortField = query.sort as string;
+
+//         if (sortField.startsWith('-')) {
+//             sort = { [sortField.slice(1)]: -1 };
+//         } else {
+//             sort = { [sortField]: 1 };
+//         }
+//     }
+
+//     // Handle limit functionality
+//     let limit: number = 5; // Default limit 
+//     if (query.limit) {
+//         const parsedLimit = parseInt(query.limit as string, 10);
+//         if (!isNaN(parsedLimit) && parsedLimit > 0) {
+//             limit = parsedLimit;
+//         }
+//     }
+
+//     // Pagination Logic
+//     let page = 1; // Default page number
+//     let skip = 0; // Default skip value
+
+//     if (query.page) {
+//         page = Number(query.page);
+//         skip = (page - 1) * limit; 
+//     }
+
+//     const paginationQuery =  filterQuery
+//         .skip(skip)         
+//         .limit(limit)   
+
+
+
+
+
+
+
+
+// // field limiting 
+
+//   let wantedFields = 'name';
+
+//   if (query.fields) {
+//     wantedFields = (query.fields as string).split(',').join(' '); 
+//   }
+
+
+//   const result = await  paginationQuery.select(wantedFields);
+
+
+
+
+  const studentQuery = new QueryBuilder(StudentModel.find(),query)
+    .search(studentSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
+
+
+  const result = await studentQuery.modelQuery;
+  return result ;
+
+
+
+
  
-
-
-
-    // filtering 
-    const excludedFields = ['searchTerm']
-
-    excludedFields.forEach((el:any) => delete queryObj[el])
- 
-
-
-    const result = await searchQuery.find(queryObj) // chaining of queries
-        .populate('admissionSemester')
-        .populate({
-            path: "academicDepartment",
-            populate: { path: "academicFaculty" }
-        })
-    return result;
 };
-  
+
+
+
+
+
+
 
 const getSingleStudentFromDB = async(studentId: string)=>{
 

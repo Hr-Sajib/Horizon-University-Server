@@ -9,7 +9,7 @@ const createStudentValidationSchema = z.object({
       name: z.object({
         firstName: z
           .string()
-          .max(5, { message: "Firstname can't be more than 5 characters" })
+          .max(10, { message: "Firstname can't be more than 5 characters" })
           .regex(/^[A-Z][a-z]*$/, { message: "First character should be uppercase and the rest in lowercase" }),
         lastName: z
           .string()
