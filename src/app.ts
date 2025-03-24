@@ -1,34 +1,32 @@
-import express, { Application, ErrorRequestHandler, NextFunction, Request, Response } from "express";
-import cors from "cors";
-import { UserRoutes } from "./app/moduls/user/user.route"; // Ensure correct path for the import
-import { globalErrorHandler } from "./app/middlewares/globalErrorHandler";
-import { notFoundHandler } from "./app/middlewares/notFound";
-import router from "./app/routes/routes";
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import express, { Application, Request, Response } from 'express';
+import globalErrorHandler from './app/middlewares/globalErrorhandler';
+import notFound from './app/middlewares/notFound';
+import router from './app/routes';
 
 const app: Application = express();
 
-// Middleware
+//parsers
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
 
-// Application Routes
-app.use("/api/v1/", router);
+app.use(cors({ origin: ['http://localhost:5173'], credentials: true }));
 
+// application routes
+app.use('/api/v1', router);
 
-// Root route
-app.get("/", async(req: Request, res: Response) => {
-  const a = 'Welcome to Horizon University..';
-  res.send(String(a)); // Send a string as response
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hi Next Level Developer !');
 });
 
-
-// global error handler 
 app.use(globalErrorHandler);
 
-// not found route 
-app.use(notFoundHandler);
-
-
-
+//Not Found
+app.use(notFound);
 
 export default app;
